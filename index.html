@@ -1,0 +1,562 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>피움아동발달상담센터</title>
+<meta name="description" content="피움아동발달상담센터 - 언어치료, 놀이치료, 감각통합치료, 인지학습치료, 사회성 그룹, 부모상담. 아이의 고유한 속도로 피어나도록 함께합니다.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fdf9f3;
+    --bg-soft: #f6efe4;
+    --ink: #3a3530;
+    --ink-soft: #6f665c;
+    --green: #6f9a7a;
+    --green-dark: #4f7a5c;
+    --peach: #f2a88b;
+    --peach-soft: #fde4d8;
+    --yellow: #f6cf6b;
+    --line: #e8ddcd;
+    --white: #ffffff;
+    --radius: 20px;
+    --shadow: 0 10px 30px rgba(90, 70, 40, .08);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+  body {
+    margin: 0;
+    font-family: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+    line-height: 1.7;
+    word-break: keep-all;
+  }
+  img { max-width: 100%; }
+  a { color: inherit; text-decoration: none; }
+  h1, h2, h3, .brand { font-family: "Gowun Dodum", "Noto Sans KR", sans-serif; font-weight: 400; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding-inline: 20px; }
+  section { padding-block: 96px; }
+  .eyebrow { color: var(--green-dark); font-weight: 700; font-size: .9rem; letter-spacing: .08em; margin: 0 0 8px; }
+  .section-title { font-size: clamp(1.7rem, 3.5vw, 2.4rem); margin: 0 0 16px; line-height: 1.35; }
+  .section-lead { color: var(--ink-soft); max-width: 640px; margin: 0 0 48px; }
+  .btn {
+    display: inline-block; padding: 14px 28px; border-radius: 999px; font-weight: 700;
+    border: 2px solid transparent; transition: transform .2s, background .2s; cursor: pointer; font-size: 1rem; font-family: inherit;
+  }
+  .btn:hover { transform: translateY(-2px); }
+  .btn-primary { background: var(--green); color: var(--white); }
+  .btn-primary:hover { background: var(--green-dark); }
+  .btn-ghost { border-color: var(--green); color: var(--green-dark); background: transparent; }
+
+  /* Header */
+  header {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(253, 249, 243, .92); backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav { display: flex; align-items: center; justify-content: space-between; height: 72px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-size: 1.3rem; }
+  .brand small { display: block; font-family: "Noto Sans KR", sans-serif; font-size: .7rem; color: var(--ink-soft); letter-spacing: .05em; line-height: 1; }
+  .nav-links { display: flex; gap: 28px; list-style: none; margin: 0; padding: 0; font-weight: 500; }
+  .nav-links a:hover { color: var(--green-dark); }
+  .nav-cta { padding: 10px 20px; font-size: .95rem; }
+  .menu-btn { display: none; background: none; border: 0; padding: 8px; cursor: pointer; }
+  .menu-btn span { display: block; width: 24px; height: 2px; background: var(--ink); margin: 5px 0; border-radius: 2px; }
+
+  /* Hero */
+  .hero { padding-block: 80px 96px; position: relative; overflow: hidden; }
+  .hero-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 48px; align-items: center; }
+  .hero h1 { font-size: clamp(2.1rem, 5vw, 3.4rem); line-height: 1.3; margin: 0 0 20px; }
+  .hero h1 em { font-style: normal; color: var(--green-dark); background: linear-gradient(transparent 62%, var(--peach-soft) 62%); }
+  .hero p { color: var(--ink-soft); font-size: 1.1rem; margin: 0 0 32px; }
+  .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+  .hero-art { position: relative; aspect-ratio: 1; max-width: 460px; width: 100%; justify-self: center; }
+  .hero-art .blob { position: absolute; inset: 0; background: var(--peach-soft); border-radius: 46% 54% 60% 40% / 50% 42% 58% 50%; }
+  .hero-art svg { position: relative; width: 100%; height: 100%; }
+  .hero-badges { display: flex; gap: 24px; margin-top: 40px; flex-wrap: wrap; }
+  .hero-badges div { font-size: .9rem; color: var(--ink-soft); }
+  .hero-badges strong { display: block; font-size: 1.4rem; color: var(--ink); font-family: "Gowun Dodum", sans-serif; font-weight: 400; }
+
+  /* About */
+  .about { background: var(--white); }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
+  .greeting { background: var(--bg-soft); border-radius: var(--radius); padding: 40px; }
+  .greeting p { margin: 0 0 16px; }
+  .greeting .sign { text-align: right; margin: 24px 0 0; font-family: "Gowun Dodum", sans-serif; font-size: 1.1rem; }
+  .values { display: grid; gap: 16px; }
+  .value { display: flex; gap: 18px; padding: 22px; border: 1px solid var(--line); border-radius: var(--radius); }
+  .value .icon { flex: none; width: 52px; height: 52px; border-radius: 16px; display: grid; place-items: center; font-size: 1.5rem; }
+  .value h3 { margin: 0 0 4px; font-size: 1.2rem; }
+  .value p { margin: 0; color: var(--ink-soft); font-size: .95rem; }
+
+  /* Programs */
+  .programs-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .card {
+    background: var(--white); border-radius: var(--radius); padding: 32px 28px;
+    box-shadow: var(--shadow); transition: transform .25s;
+  }
+  .card:hover { transform: translateY(-4px); }
+  .card .icon { width: 56px; height: 56px; border-radius: 18px; display: grid; place-items: center; font-size: 1.6rem; margin-bottom: 18px; }
+  .card h3 { margin: 0 0 8px; font-size: 1.3rem; }
+  .card p { margin: 0 0 14px; color: var(--ink-soft); font-size: .95rem; }
+  .card ul { margin: 0; padding: 0; list-style: none; font-size: .88rem; color: var(--ink-soft); }
+  .card li::before { content: "· "; color: var(--green); font-weight: 700; }
+  .c-green { background: #e3efe6; } .c-peach { background: var(--peach-soft); } .c-yellow { background: #fcf0cd; } .c-blue { background: #e1ecf4; } .c-purple { background: #ece5f3; } .c-sand { background: var(--bg-soft); }
+
+  /* Checklist */
+  .check { background: var(--green); color: var(--white); border-radius: 32px; padding: 56px; display: grid; grid-template-columns: 1fr 1.2fr; gap: 48px; align-items: center; }
+  .check .eyebrow { color: #e3efe6; }
+  .check p { opacity: .9; }
+  .check-list { display: grid; gap: 10px; }
+  .check-list label {
+    display: flex; gap: 12px; align-items: flex-start; background: rgba(255,255,255,.12);
+    padding: 14px 18px; border-radius: 14px; cursor: pointer; transition: background .2s;
+  }
+  .check-list label:hover { background: rgba(255,255,255,.2); }
+  .check-list input { accent-color: var(--yellow); width: 18px; height: 18px; margin-top: 4px; flex: none; }
+  .check-result { margin-top: 16px; padding: 16px 18px; background: var(--white); color: var(--ink); border-radius: 14px; font-size: .95rem; }
+
+  /* Team */
+  .team { background: var(--white); }
+  .team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .member { text-align: center; padding: 28px 20px; border: 1px solid var(--line); border-radius: var(--radius); }
+  .avatar { width: 96px; height: 96px; border-radius: 50%; margin: 0 auto 16px; display: grid; place-items: center; font-family: "Gowun Dodum", sans-serif; font-size: 1.6rem; color: var(--ink); }
+  .member h3 { margin: 0; font-size: 1.15rem; }
+  .member .role { color: var(--green-dark); font-size: .9rem; font-weight: 500; margin: 2px 0 10px; }
+  .member p { margin: 0; font-size: .85rem; color: var(--ink-soft); }
+
+  /* Process */
+  .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; counter-reset: step; }
+  .step { position: relative; background: var(--white); border-radius: var(--radius); padding: 32px 24px; box-shadow: var(--shadow); }
+  .step::before {
+    counter-increment: step; content: counter(step, decimal-leading-zero);
+    font-family: "Gowun Dodum", sans-serif; font-size: 2rem; color: var(--peach); display: block; margin-bottom: 8px;
+  }
+  .step h3 { margin: 0 0 6px; font-size: 1.2rem; }
+  .step p { margin: 0; font-size: .92rem; color: var(--ink-soft); }
+  .hours { margin-top: 32px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .hours div { background: var(--bg-soft); border-radius: var(--radius); padding: 22px 24px; }
+  .hours strong { display: block; margin-bottom: 4px; }
+  .hours span { color: var(--ink-soft); font-size: .95rem; }
+
+  /* Contact */
+  .contact { background: var(--bg-soft); }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+  .info-list { list-style: none; padding: 0; margin: 0 0 24px; display: grid; gap: 18px; }
+  .info-list li { display: flex; gap: 14px; }
+  .info-list .ic { flex: none; width: 44px; height: 44px; border-radius: 14px; background: var(--white); display: grid; place-items: center; }
+  .info-list strong { display: block; font-size: .85rem; color: var(--ink-soft); font-weight: 500; }
+  .map { background: var(--white); border-radius: var(--radius); aspect-ratio: 16/9; display: grid; place-items: center; color: var(--ink-soft); border: 2px dashed var(--line); text-align: center; padding: 20px; font-size: .9rem; }
+  form { background: var(--white); border-radius: var(--radius); padding: 36px; box-shadow: var(--shadow); }
+  form h3 { margin: 0 0 20px; font-size: 1.4rem; }
+  .field { margin-bottom: 16px; }
+  .field label { display: block; font-size: .9rem; font-weight: 500; margin-bottom: 6px; }
+  .field input, .field select, .field textarea {
+    width: 100%; padding: 12px 14px; border: 1px solid var(--line); border-radius: 12px;
+    font: inherit; background: var(--bg); color: var(--ink);
+  }
+  .field input:focus, .field select:focus, .field textarea:focus { outline: 2px solid var(--green); border-color: transparent; }
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .agree { display: flex; gap: 8px; align-items: center; font-size: .88rem; color: var(--ink-soft); margin: 4px 0 20px; }
+  form .btn { width: 100%; }
+  .form-done { text-align: center; padding: 40px 0; }
+  .form-done .big { font-size: 3rem; }
+
+  /* Footer */
+  footer { background: var(--ink); color: #cfc6ba; padding-block: 48px; font-size: .88rem; }
+  .foot { display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+  footer .brand { color: var(--white); margin-bottom: 10px; }
+  footer p { margin: 2px 0; }
+
+  .float-call {
+    position: fixed; right: 20px; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); z-index: 40;
+    background: var(--peach); color: var(--white); border-radius: 999px; padding: 14px 22px; font-weight: 700;
+    box-shadow: 0 8px 24px rgba(242, 168, 139, .5);
+  }
+
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s, transform .7s; }
+  .reveal.on { opacity: 1; transform: none; }
+
+  @media (max-width: 960px) {
+    .programs-grid { grid-template-columns: repeat(2, 1fr); }
+    .team-grid, .steps { grid-template-columns: repeat(2, 1fr); }
+    .check { grid-template-columns: 1fr; padding: 40px 28px; }
+  }
+  @media (max-width: 780px) {
+    section { padding-block: 72px; }
+    .menu-btn { display: block; }
+    .nav-links {
+      position: absolute; top: 72px; left: 0; right: 0; flex-direction: column; gap: 0;
+      background: var(--bg); border-bottom: 1px solid var(--line); padding: 8px 20px 16px; display: none;
+    }
+    .nav-links.open { display: flex; }
+    .nav-links a { display: block; padding: 12px 0; }
+    .nav-cta { display: none; }
+    .hero-grid, .about-grid, .contact-grid { grid-template-columns: 1fr; }
+    .hero-art { max-width: 320px; order: -1; }
+    .hours { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 520px) {
+    .programs-grid, .team-grid, .steps, .row2 { grid-template-columns: 1fr; }
+    .greeting, form { padding: 28px 22px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .reveal { opacity: 1; transform: none; transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="#top" class="brand" aria-label="피움아동발달상담센터 홈">
+      <svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true">
+        <g transform="translate(20 18)">
+          <ellipse rx="6" ry="9" cy="-8" fill="#f2a88b"/>
+          <ellipse rx="6" ry="9" cy="-8" fill="#f6cf6b" transform="rotate(72)"/>
+          <ellipse rx="6" ry="9" cy="-8" fill="#f2a88b" transform="rotate(144)"/>
+          <ellipse rx="6" ry="9" cy="-8" fill="#f6cf6b" transform="rotate(216)"/>
+          <ellipse rx="6" ry="9" cy="-8" fill="#f2a88b" transform="rotate(288)"/>
+          <circle r="5" fill="#6f9a7a"/>
+        </g>
+      </svg>
+      <span>피움<small>아동발달상담센터</small></span>
+    </a>
+    <button class="menu-btn" aria-label="메뉴 열기" aria-expanded="false"><span></span><span></span><span></span></button>
+    <ul class="nav-links">
+      <li><a href="#about">센터소개</a></li>
+      <li><a href="#programs">치료프로그램</a></li>
+      <li><a href="#team">치료진</a></li>
+      <li><a href="#process">이용안내</a></li>
+      <li><a href="#contact">오시는 길</a></li>
+    </ul>
+    <a href="#contact" class="btn btn-primary nav-cta">상담 예약</a>
+  </div>
+</header>
+
+<main id="top">
+  <!-- Hero -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="eyebrow">PIUM CHILD DEVELOPMENT CENTER</p>
+        <h1>아이마다 피어나는<br><em>속도는 다릅니다</em></h1>
+        <p>피움아동발달상담센터는 아이의 고유한 기질과 속도를 존중하며,<br>
+          전문 치료진이 가정과 함께 건강한 성장을 돕습니다.</p>
+        <div class="hero-actions">
+          <a href="#contact" class="btn btn-primary">초기 상담 신청하기</a>
+          <a href="#programs" class="btn btn-ghost">치료 프로그램 보기</a>
+        </div>
+        <div class="hero-badges">
+          <div><strong>1:1 맞춤</strong>개별 발달 평가</div>
+          <div><strong>6개 영역</strong>통합 치료 프로그램</div>
+          <div><strong>부모 협력</strong>매 회기 피드백</div>
+        </div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="blob"></div>
+        <svg viewBox="0 0 400 400">
+          <!-- ground -->
+          <ellipse cx="200" cy="330" rx="130" ry="18" fill="#e7d9c3"/>
+          <!-- pot -->
+          <path d="M150 260 h100 l-12 70 h-76 z" fill="#f2a88b"/>
+          <rect x="142" y="250" width="116" height="18" rx="8" fill="#e8957a"/>
+          <!-- stem -->
+          <path d="M200 252 C200 200 196 170 200 130" stroke="#6f9a7a" stroke-width="7" fill="none" stroke-linecap="round"/>
+          <path d="M199 210 C170 200 158 180 160 160 C185 165 198 185 199 210z" fill="#8bb596"/>
+          <path d="M201 190 C228 180 242 160 240 138 C215 145 202 165 201 190z" fill="#6f9a7a"/>
+          <!-- flower -->
+          <g transform="translate(200 110)">
+            <ellipse rx="20" ry="32" cy="-28" fill="#f6cf6b"/>
+            <ellipse rx="20" ry="32" cy="-28" fill="#f2a88b" transform="rotate(60)"/>
+            <ellipse rx="20" ry="32" cy="-28" fill="#f6cf6b" transform="rotate(120)"/>
+            <ellipse rx="20" ry="32" cy="-28" fill="#f2a88b" transform="rotate(180)"/>
+            <ellipse rx="20" ry="32" cy="-28" fill="#f6cf6b" transform="rotate(240)"/>
+            <ellipse rx="20" ry="32" cy="-28" fill="#f2a88b" transform="rotate(300)"/>
+            <circle r="20" fill="#fff6e3"/>
+            <circle cx="-7" cy="-3" r="2.5" fill="#3a3530"/>
+            <circle cx="7" cy="-3" r="2.5" fill="#3a3530"/>
+            <path d="M-6 6 Q0 12 6 6" stroke="#3a3530" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+          </g>
+          <!-- sparkles -->
+          <circle cx="90" cy="120" r="6" fill="#f6cf6b"/>
+          <circle cx="320" cy="90" r="8" fill="#fff"/>
+          <circle cx="310" cy="220" r="5" fill="#6f9a7a"/>
+          <circle cx="100" cy="230" r="9" fill="#fff"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about" class="about">
+    <div class="wrap">
+      <p class="eyebrow">ABOUT US</p>
+      <h2 class="section-title">작은 씨앗이 꽃을 피우기까지</h2>
+      <p class="section-lead">'피움'은 아이 안에 이미 있는 가능성이 스스로 피어날 수 있도록 곁에서 기다리고 돕겠다는 약속입니다.</p>
+      <div class="about-grid">
+        <div class="greeting reveal">
+          <p>안녕하세요, 피움아동발달상담센터를 찾아주셔서 감사합니다.</p>
+          <p>아이의 발달에 대한 고민은 부모님께 무엇보다 크고 무거운 마음일 것입니다. 저희는 그 마음을 깊이 공감하며, 정확한 평가를 바탕으로 아이에게 꼭 맞는 치료 계획을 세웁니다.</p>
+          <p>아이를 '고쳐야 할 대상'이 아닌 '함께 성장할 존재'로 바라보며, 치료실 안에서의 변화가 가정과 일상으로 이어지도록 부모님과 한 팀이 되겠습니다.</p>
+          <p class="sign">피움아동발달상담센터 센터장 <strong>[원장 이름]</strong></p>
+        </div>
+        <div class="values">
+          <div class="value reveal">
+            <div class="icon c-green">🌱</div>
+            <div><h3>존중</h3><p>아이의 기질과 발달 속도를 있는 그대로 존중합니다.</p></div>
+          </div>
+          <div class="value reveal">
+            <div class="icon c-peach">🔍</div>
+            <div><h3>전문성</h3><p>표준화된 검사와 근거 기반 치료로 정확하게 접근합니다.</p></div>
+          </div>
+          <div class="value reveal">
+            <div class="icon c-yellow">🤝</div>
+            <div><h3>협력</h3><p>매 회기 부모상담으로 가정과 치료실을 연결합니다.</p></div>
+          </div>
+          <div class="value reveal">
+            <div class="icon c-blue">🏡</div>
+            <div><h3>안전한 공간</h3><p>아이가 편안하게 머물 수 있는 따뜻한 환경을 만듭니다.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Programs -->
+  <section id="programs">
+    <div class="wrap">
+      <p class="eyebrow">PROGRAMS</p>
+      <h2 class="section-title">치료 프로그램</h2>
+      <p class="section-lead">발달 평가 결과에 따라 한 가지 또는 여러 영역의 치료를 통합적으로 설계합니다.</p>
+      <div class="programs-grid">
+        <article class="card reveal">
+          <div class="icon c-peach">💬</div>
+          <h3>언어치료</h3>
+          <p>말이 늦거나 발음이 부정확한 아이, 의사소통에 어려움이 있는 아이를 돕습니다.</p>
+          <ul><li>언어발달지연</li><li>조음·음운장애</li><li>유창성(말더듬)</li></ul>
+        </article>
+        <article class="card reveal">
+          <div class="icon c-green">🧸</div>
+          <h3>놀이치료</h3>
+          <p>놀이를 통해 아이가 감정을 표현하고 스스로 조절하는 힘을 기릅니다.</p>
+          <ul><li>정서·불안 문제</li><li>분리불안, 위축</li><li>공격성, 감정 조절</li></ul>
+        </article>
+        <article class="card reveal">
+          <div class="icon c-yellow">🤸</div>
+          <h3>감각통합치료</h3>
+          <p>감각 정보를 처리하고 몸을 조절하는 능력을 키워 일상 적응을 돕습니다.</p>
+          <ul><li>감각 과민·둔감</li><li>대·소근육 발달</li><li>주의집중, 협응</li></ul>
+        </article>
+        <article class="card reveal">
+          <div class="icon c-blue">🧩</div>
+          <h3>인지학습치료</h3>
+          <p>주의력, 기억력, 문제해결력 등 학습의 기초가 되는 인지 능력을 다집니다.</p>
+          <ul><li>학습 준비도</li><li>ADHD·주의력 문제</li><li>읽기·쓰기·셈하기</li></ul>
+        </article>
+        <article class="card reveal">
+          <div class="icon c-purple">👫</div>
+          <h3>사회성 그룹</h3>
+          <p>또래와 함께하는 소그룹 활동으로 관계 맺기와 사회적 기술을 익힙니다.</p>
+          <ul><li>또래 관계 어려움</li><li>규칙·차례 지키기</li><li>2~4인 소그룹</li></ul>
+        </article>
+        <article class="card reveal">
+          <div class="icon c-sand">👨‍👩‍👧</div>
+          <h3>부모상담 · 발달평가</h3>
+          <p>표준화 검사로 아이의 현재 발달 수준을 확인하고 양육 방향을 함께 찾습니다.</p>
+          <ul><li>종합 발달 검사</li><li>부모 양육 코칭</li><li>영유아 검진 후 상담</li></ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Checklist -->
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="check reveal">
+        <div>
+          <p class="eyebrow">SELF CHECK</p>
+          <h2 class="section-title">혹시 이런 모습이<br>보이나요?</h2>
+          <p>해당하는 항목을 체크해 보세요. 한두 가지라도 오래 지속된다면 전문가와 이야기 나눠보는 것이 도움이 됩니다.</p>
+          <p style="font-size:.85rem;opacity:.75">※ 간단한 참고용이며 진단을 대신하지 않습니다.</p>
+        </div>
+        <div>
+          <div class="check-list" id="checklist">
+            <label><input type="checkbox"> 또래에 비해 말이 늦거나 하는 말이 적어요.</label>
+            <label><input type="checkbox"> 이름을 불러도 반응이 적거나 눈맞춤이 어려워요.</label>
+            <label><input type="checkbox"> 특정 소리, 촉감, 음식에 매우 예민해요.</label>
+            <label><input type="checkbox"> 잘 넘어지거나 몸 움직임이 서툴러요.</label>
+            <label><input type="checkbox"> 감정 조절이 어렵고 떼쓰기가 심해요.</label>
+            <label><input type="checkbox"> 친구와 어울리기 어려워하거나 혼자 놀아요.</label>
+            <label><input type="checkbox"> 집중 시간이 짧고 산만한 편이에요.</label>
+          </div>
+          <div class="check-result" id="checkResult">항목을 선택하면 안내가 표시됩니다.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team -->
+  <section id="team" class="team">
+    <div class="wrap">
+      <p class="eyebrow">OUR TEAM</p>
+      <h2 class="section-title">치료진 소개</h2>
+      <p class="section-lead">관련 학위와 국가·민간 자격을 갖춘 치료사들이 정기 사례회의를 통해 아이를 함께 살핍니다.</p>
+      <div class="team-grid">
+        <div class="member reveal">
+          <div class="avatar c-peach">원장</div>
+          <h3>[이름]</h3>
+          <p class="role">센터장 · 놀이치료</p>
+          <p>[학위 및 자격 사항]</p>
+        </div>
+        <div class="member reveal">
+          <div class="avatar c-green">언어</div>
+          <h3>[이름]</h3>
+          <p class="role">언어재활사</p>
+          <p>[학위 및 자격 사항]</p>
+        </div>
+        <div class="member reveal">
+          <div class="avatar c-yellow">감통</div>
+          <h3>[이름]</h3>
+          <p class="role">감각통합치료사</p>
+          <p>[학위 및 자격 사항]</p>
+        </div>
+        <div class="member reveal">
+          <div class="avatar c-blue">인지</div>
+          <h3>[이름]</h3>
+          <p class="role">인지학습치료사</p>
+          <p>[학위 및 자격 사항]</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process -->
+  <section id="process">
+    <div class="wrap">
+      <p class="eyebrow">HOW IT WORKS</p>
+      <h2 class="section-title">이용 안내</h2>
+      <p class="section-lead">처음 오시는 분도 편안하게 시작하실 수 있도록 단계별로 안내해 드립니다.</p>
+      <div class="steps">
+        <div class="step reveal"><h3>상담 예약</h3><p>전화 또는 온라인으로 초기 상담을 예약합니다.</p></div>
+        <div class="step reveal"><h3>초기 상담</h3><p>부모 면담과 아이 관찰로 주요 고민을 파악합니다.</p></div>
+        <div class="step reveal"><h3>발달 평가</h3><p>필요한 영역의 표준화 검사 후 결과를 상세히 설명드립니다.</p></div>
+        <div class="step reveal"><h3>치료 진행</h3><p>맞춤 목표로 치료를 시작하고 정기적으로 경과를 점검합니다.</p></div>
+      </div>
+      <div class="hours">
+        <div><strong>평일</strong><span>[오전 10:00 ~ 오후 7:00]</span></div>
+        <div><strong>토요일</strong><span>[오전 9:00 ~ 오후 3:00]</span></div>
+        <div><strong>휴무</strong><span>[일요일 · 공휴일]</span></div>
+      </div>
+      <p style="color:var(--ink-soft);font-size:.9rem;margin-top:20px">※ 발달재활서비스 바우처 이용 가능 여부는 센터로 문의해 주세요.</p>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="contact">
+    <div class="wrap">
+      <p class="eyebrow">CONTACT</p>
+      <h2 class="section-title">오시는 길 · 상담 예약</h2>
+      <p class="section-lead">궁금한 점이 있으시면 편하게 연락 주세요. 확인 후 빠르게 연락드리겠습니다.</p>
+      <div class="contact-grid">
+        <div>
+          <ul class="info-list">
+            <li><span class="ic">📞</span><div><strong>전화</strong>[000-0000-0000]</div></li>
+            <li><span class="ic">📍</span><div><strong>주소</strong>[도로명 주소를 입력하세요]</div></li>
+            <li><span class="ic">🚗</span><div><strong>주차</strong>[건물 내 주차 가능 여부]</div></li>
+            <li><span class="ic">✉️</span><div><strong>이메일</strong>[이메일 주소]</div></li>
+          </ul>
+          <div class="map">지도 영역<br>(네이버·카카오 지도 퍼가기 코드를 넣으세요)</div>
+        </div>
+        <form id="bookForm" novalidate>
+          <div id="formBody">
+            <h3>초기 상담 신청</h3>
+            <div class="row2">
+              <div class="field"><label for="pname">보호자 성함</label><input id="pname" required></div>
+              <div class="field"><label for="phone">연락처</label><input id="phone" type="tel" placeholder="010-0000-0000" required></div>
+            </div>
+            <div class="row2">
+              <div class="field"><label for="cage">아이 나이</label><input id="cage" placeholder="예: 만 4세"></div>
+              <div class="field"><label for="area">관심 분야</label>
+                <select id="area">
+                  <option>잘 모르겠어요</option><option>언어치료</option><option>놀이치료</option>
+                  <option>감각통합치료</option><option>인지학습치료</option><option>사회성 그룹</option><option>발달평가</option>
+                </select>
+              </div>
+            </div>
+            <div class="field"><label for="msg">상담 내용</label><textarea id="msg" rows="4" placeholder="아이에 대해 걱정되는 점을 자유롭게 적어주세요."></textarea></div>
+            <label class="agree"><input type="checkbox" id="agree" required> 개인정보 수집 및 이용에 동의합니다.</label>
+            <p id="formErr" style="color:#c0573a;font-size:.9rem;margin:0 0 12px" hidden></p>
+            <button class="btn btn-primary" type="submit">상담 신청하기</button>
+          </div>
+          <div class="form-done" id="formDone" hidden>
+            <div class="big">🌼</div>
+            <h3>신청이 접수되었습니다</h3>
+            <p style="color:var(--ink-soft)">확인 후 남겨주신 연락처로<br>빠르게 연락드리겠습니다.</p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div>
+      <div class="brand">피움아동발달상담센터</div>
+      <p>대표 [이름] · 사업자등록번호 [000-00-00000]</p>
+      <p>[주소] · Tel [000-0000-0000]</p>
+    </div>
+    <div style="align-self:flex-end">© 2026 피움아동발달상담센터. All rights reserved.</div>
+  </div>
+</footer>
+
+<a href="#contact" class="float-call">📞 상담 예약</a>
+
+<script>
+  // 모바일 메뉴
+  const menuBtn = document.querySelector('.menu-btn');
+  const navLinks = document.querySelector('.nav-links');
+  menuBtn.addEventListener('click', () => {
+    const open = navLinks.classList.toggle('open');
+    menuBtn.setAttribute('aria-expanded', open);
+  });
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+  // 스크롤 등장 효과
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); } });
+  }, { threshold: .15 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // 셀프 체크리스트
+  const boxes = document.querySelectorAll('#checklist input');
+  const result = document.getElementById('checkResult');
+  boxes.forEach(b => b.addEventListener('change', () => {
+    const n = [...boxes].filter(x => x.checked).length;
+    if (n === 0) result.textContent = '항목을 선택하면 안내가 표시됩니다.';
+    else if (n <= 2) result.innerHTML = `<strong>${n}개 항목</strong>에 해당해요. 일시적인 모습일 수 있지만, 3개월 이상 지속된다면 상담을 권해드려요.`;
+    else result.innerHTML = `<strong>${n}개 항목</strong>에 해당해요. 전문적인 발달 평가를 통해 아이의 현재 상태를 확인해 보시길 권해드려요. <a href="#contact" style="color:var(--green-dark);font-weight:700">상담 신청 →</a>`;
+  }));
+
+  // 상담 신청 폼 (실제 전송은 서버/폼 서비스 연결 필요)
+  document.getElementById('bookForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const err = document.getElementById('formErr');
+    if (!document.getElementById('pname').value.trim() || !document.getElementById('phone').value.trim()) {
+      err.textContent = '보호자 성함과 연락처를 입력해 주세요.'; err.hidden = false; return;
+    }
+    if (!document.getElementById('agree').checked) {
+      err.textContent = '개인정보 수집 및 이용에 동의해 주세요.'; err.hidden = false; return;
+    }
+    err.hidden = true;
+    document.getElementById('formBody').hidden = true;
+    document.getElementById('formDone').hidden = false;
+  });
+</script>
+</body>
+</html>
