@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>피움 관리자</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f7f3ec; --card: #ffffff; --ink: #3a3530; --ink-soft: #6f665c; --line: #e8ddcd;
+    --green: #6f9a7a; --green-dark: #4f7a5c; --peach: #f2a88b; --red: #c0573a; --yellow: #f6cf6b;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: "Noto Sans KR", "Malgun Gothic", sans-serif; background: var(--bg); color: var(--ink); line-height: 1.6; }
+  h1, h2, .brand { font-family: "Gowun Dodum", "Noto Sans KR", sans-serif; font-weight: 400; }
+  .wrap { max-width: 920px; margin: 0 auto; padding-inline: 20px; }
+
+  .topbar { position: sticky; top: 0; z-index: 10; background: rgba(247,243,236,.95); backdrop-filter: blur(6px); border-bottom: 1px solid var(--line); }
+  .topbar .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; height: 64px; }
+  .brand { font-size: 1.2rem; }
+  .brand small { font-family: "Noto Sans KR", sans-serif; font-size: .75rem; color: var(--ink-soft); margin-left: 6px; }
+  .top-actions { display: flex; gap: 8px; align-items: center; }
+  #dirty { font-size: .85rem; color: var(--red); }
+
+  .btn { border: 0; border-radius: 999px; padding: 10px 20px; font: inherit; font-weight: 700; cursor: pointer; background: var(--green); color: #fff; }
+  .btn:hover { background: var(--green-dark); }
+  .btn:disabled { opacity: .5; cursor: default; }
+  .btn-sub { background: transparent; color: var(--ink-soft); border: 1px solid var(--line); font-weight: 500; }
+  .btn-sub:hover { background: #fff; }
+  .btn-sm { padding: 6px 12px; font-size: .85rem; }
+  .btn-del { background: transparent; color: var(--red); border: 1px solid #f0cfc4; font-weight: 500; }
+  .btn-del:hover { background: #fdf0eb; }
+
+  main { padding-block: 32px 80px; }
+  .panel { background: var(--card); border-radius: 18px; padding: 28px; margin-bottom: 20px; box-shadow: 0 6px 20px rgba(90,70,40,.06); }
+  .panel h2 { margin: 0 0 4px; font-size: 1.35rem; }
+  .panel .hint { margin: 0 0 20px; color: var(--ink-soft); font-size: .9rem; }
+  .field { margin-bottom: 14px; }
+  .field label { display: block; font-size: .85rem; font-weight: 500; margin-bottom: 5px; color: var(--ink-soft); }
+  input, textarea, select { width: 100%; padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; font: inherit; background: #fdfbf7; color: var(--ink); }
+  input:focus, textarea:focus, select:focus { outline: 2px solid var(--green); border-color: transparent; }
+  textarea { resize: vertical; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .grid3 { display: grid; grid-template-columns: 80px 1fr 1fr; gap: 12px; }
+
+  .item { border: 1px solid var(--line); border-radius: 14px; padding: 18px; margin-bottom: 12px; background: #fdfbf7; }
+  .item-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; gap: 8px; flex-wrap: wrap; }
+  .item-head strong { font-size: 1rem; }
+  .item-tools { display: flex; gap: 6px; }
+
+  .login { max-width: 520px; margin: 48px auto; }
+  .login ol { padding-left: 20px; color: var(--ink-soft); font-size: .92rem; }
+  .login ol li { margin-bottom: 6px; }
+  .login a { color: var(--green-dark); font-weight: 700; }
+  .remember { display: flex; gap: 8px; align-items: center; font-size: .9rem; color: var(--ink-soft); margin: 4px 0 16px; }
+  .remember input { width: auto; }
+
+  .toast { position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--ink); color: #fff; padding: 12px 22px; border-radius: 12px; font-size: .95rem; z-index: 20; max-width: calc(100% - 32px); }
+  .toast.err { background: var(--red); }
+  .msg-err { color: var(--red); font-size: .9rem; }
+
+  @media (max-width: 640px) {
+    .grid2, .grid3 { grid-template-columns: 1fr; }
+    .brand small { display: none; }
+    .panel { padding: 22px 18px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <div class="brand">🌼 피움 관리자<small>홈페이지 내용 관리</small></div>
+    <div class="top-actions" id="topActions" hidden>
+      <span id="dirty" hidden>저장 안 됨</span>
+      <a class="btn btn-sub btn-sm" href="index.html" target="_blank">홈페이지 보기</a>
+      <button class="btn btn-sub btn-sm" id="logoutBtn">로그아웃</button>
+      <button class="btn" id="saveBtn">저장하고 게시</button>
+    </div>
+  </div>
+</div>
+
+<!-- 로그인 -->
+<div class="wrap">
+  <section class="panel login" id="loginPanel">
+    <h2>관리자 로그인</h2>
+    <p class="hint">GitHub 접근 토큰으로 로그인합니다. 저장하면 GitHub 저장소(PIOOM)에 바로 반영됩니다.</p>
+    <div class="field">
+      <label for="tokenInput">GitHub 토큰</label>
+      <input id="tokenInput" type="password" placeholder="github_pat_로 시작하는 토큰" autocomplete="off">
+    </div>
+    <label class="remember"><input type="checkbox" id="rememberChk" checked> 이 컴퓨터에서 로그인 유지</label>
+    <p class="msg-err" id="loginErr" hidden></p>
+    <button class="btn" id="loginBtn" style="width:100%">로그인</button>
+    <details style="margin-top:20px">
+      <summary style="cursor:pointer;font-weight:500">토큰 만드는 방법</summary>
+      <ol>
+        <li><a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">GitHub 토큰 만들기 페이지</a>로 이동합니다.</li>
+        <li>Token name: <b>피움 관리자</b>, Expiration: 원하는 기간을 선택합니다.</li>
+        <li>Repository access → <b>Only select repositories</b> → <b>PIOOM</b> 선택</li>
+        <li>Permissions → Repository permissions → <b>Contents</b>를 <b>Read and write</b>로 변경</li>
+        <li><b>Generate token</b>을 누르고 나온 토큰을 복사해 위에 붙여넣습니다.</li>
+      </ol>
+    </details>
+  </section>
+</div>
+
+<!-- 편집 화면 -->
+<main class="wrap" id="editor" hidden>
+  <section class="panel">
+    <h2>📢 공지 배너</h2>
+    <p class="hint">홈페이지 맨 위에 노란 띠로 표시됩니다. 비워두면 표시되지 않습니다.</p>
+    <div class="field"><textarea rows="2" data-path="notice" placeholder="예: 10월 3일(금) 개천절은 휴무입니다."></textarea></div>
+  </section>
+
+  <section class="panel">
+    <h2>🌷 메인 문구</h2>
+    <p class="hint">홈페이지 첫 화면의 큰 제목과 소개 문장입니다.</p>
+    <div class="grid2">
+      <div class="field"><label>제목 첫째 줄</label><input data-path="hero.title1"></div>
+      <div class="field"><label>제목 둘째 줄 (강조)</label><input data-path="hero.title2"></div>
+    </div>
+    <div class="field"><label>소개 문장</label><textarea rows="3" data-path="hero.desc"></textarea></div>
+  </section>
+
+  <section class="panel">
+    <h2>✉️ 센터장 인사말</h2>
+    <p class="hint">문단 사이는 빈 줄로 구분해 주세요.</p>
+    <div class="field"><label>센터장 이름</label><input data-path="greeting.director"></div>
+    <div class="field"><label>인사말</label><textarea rows="9" id="greetingText"></textarea></div>
+  </section>
+
+  <section class="panel">
+    <h2>🧩 치료 프로그램</h2>
+    <p class="hint">프로그램을 추가·삭제하거나 순서를 바꿀 수 있습니다.</p>
+    <div id="programsList"></div>
+    <button class="btn btn-sub" data-add="programs">+ 프로그램 추가</button>
+  </section>
+
+  <section class="panel">
+    <h2>👩‍⚕️ 치료진</h2>
+    <p class="hint">'뱃지'는 동그라미 안에 들어가는 짧은 글자입니다 (예: 언어, 원장).</p>
+    <div id="teamList"></div>
+    <button class="btn btn-sub" data-add="team">+ 치료사 추가</button>
+  </section>
+
+  <section class="panel">
+    <h2>🕘 운영 시간</h2>
+    <div id="hoursList"></div>
+    <button class="btn btn-sub" data-add="hours">+ 항목 추가</button>
+  </section>
+
+  <section class="panel">
+    <h2>📍 연락처 · 오시는 길</h2>
+    <div class="grid2">
+      <div class="field"><label>전화번호</label><input data-path="contact.phone"></div>
+      <div class="field"><label>이메일</label><input data-path="contact.email"></div>
+    </div>
+    <div class="field"><label>주소</label><input data-path="contact.address"></div>
+    <div class="field"><label>주차 안내</label><input data-path="contact.parking"></div>
+    <div class="field"><label>지도 링크 (네이버·카카오 지도에서 '공유 → 링크 복사')</label><input data-path="contact.mapUrl" placeholder="https://naver.me/..."></div>
+  </section>
+
+  <section class="panel">
+    <h2>🏷️ 하단 사업자 정보</h2>
+    <div class="grid2">
+      <div class="field"><label>대표자</label><input data-path="footer.ceo"></div>
+      <div class="field"><label>사업자등록번호</label><input data-path="footer.bizNo"></div>
+    </div>
+  </section>
+</main>
+
+<div class="toast" id="toast" hidden></div>
+
+<script src="content.js"></script>
+<script>
+  const REPO = 'matdongsan7-max/PIOOM';
+  const BRANCH = 'main';
+  const FILE = 'content.js';
+  const API = `https://api.github.com/repos/${REPO}/contents/${FILE}`;
+  const COLORS = [['c-peach','살구'],['c-green','초록'],['c-yellow','노랑'],['c-blue','하늘'],['c-purple','보라'],['c-sand','베이지']];
+  const TEMPLATES = {
+    programs: { icon: '🌱', color: 'c-green', title: '새 프로그램', desc: '', tags: [] },
+    team: { badge: '', color: 'c-green', name: '', role: '', desc: '' },
+    hours: { label: '', time: '' },
+  };
+
+  let token = '';
+  let data = null;
+  let sha = null;
+  let dirty = false;
+  const $ = id => document.getElementById(id);
+
+  // ---------- 저장소 접근 ----------
+  const store = {
+    get() { try { return localStorage.getItem('pium_token') || ''; } catch { return ''; } },
+    set(v) { try { localStorage.setItem('pium_token', v); } catch {} },
+    clear() { try { localStorage.removeItem('pium_token'); } catch {} },
+  };
+
+  function b64encode(str) {
+    const bytes = new TextEncoder().encode(str);
+    let bin = '';
+    for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000));
+    return btoa(bin);
+  }
+  function b64decode(b64) {
+    const bin = atob(b64.replace(/\s/g, ''));
+    return new TextDecoder().decode(Uint8Array.from(bin, c => c.charCodeAt(0)));
+  }
+
+  async function gh(method, body) {
+    const url = method === 'GET' ? `${API}?ref=${BRANCH}&t=${Date.now()}` : API;
+    const res = await fetch(url, {
+      method,
+      headers: { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github+json' },
+      body: body ? JSON.stringify(body) : undefined,
+    });
+    if (!res.ok) {
+      const msg = res.status === 401 ? '토큰이 올바르지 않거나 만료되었습니다.'
+        : res.status === 403 || res.status === 404 ? '이 토큰으로 PIOOM 저장소에 접근할 수 없습니다. 권한(Contents: Read and write)을 확인해 주세요.'
+        : res.status === 409 ? '다른 곳에서 먼저 수정되었습니다. 새로고침 후 다시 시도해 주세요.'
+        : `GitHub 오류 (${res.status})`;
+      throw new Error(msg);
+    }
+    return res.json();
+  }
+
+  async function loadRemote() {
+    const file = await gh('GET');
+    sha = file.sha;
+    const text = b64decode(file.content);
+    return JSON.parse(text.slice(text.indexOf('{'), text.lastIndexOf('}') + 1));
+  }
+
+  async function save() {
+    syncGreeting();
+    const btn = $('saveBtn');
+    btn.disabled = true; btn.textContent = '저장 중…';
+    try {
+      const content = 'window.SITE = ' + JSON.stringify(data, null, 2) + ';\n';
+      const res = await gh('PUT', {
+        message: `관리자: 홈페이지 내용 수정 (${new Date().toLocaleString('ko-KR')})`,
+        content: b64encode(content),
+        sha,
+        branch: BRANCH,
+      });
+      sha = res.content.sha;
+      setDirty(false);
+      toast('저장되었습니다. GitHub에 반영됐어요. 홈페이지에는 1~2분 뒤 표시됩니다.');
+    } catch (e) {
+      toast(e.message, true);
+    } finally {
+      btn.disabled = false; btn.textContent = '저장하고 게시';
+    }
+  }
+
+  // ---------- 화면 ----------
+  function toast(msg, err) {
+    const t = $('toast');
+    t.textContent = msg; t.className = 'toast' + (err ? ' err' : ''); t.hidden = false;
+    clearTimeout(toast.timer);
+    toast.timer = setTimeout(() => t.hidden = true, err ? 6000 : 4000);
+  }
+  function setDirty(v) { dirty = v; $('dirty').hidden = !v; }
+
+  const getPath = (obj, path) => path.split('.').reduce((o, k) => o?.[k], obj);
+  function setPath(obj, path, val) {
+    const keys = path.split('.'); const last = keys.pop();
+    keys.reduce((o, k) => o[k], obj)[last] = val;
+  }
+  const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+  function colorSelect(path, value) {
+    return `<select data-path="${path}">${COLORS.map(([v, n]) => `<option value="${v}"${v === value ? ' selected' : ''}>${n}</option>`).join('')}</select>`;
+  }
+  function tools(list, i, len) {
+    return `<div class="item-tools">
+      <button class="btn btn-sub btn-sm" data-move="${list}:${i}:-1" ${i === 0 ? 'disabled' : ''}>▲</button>
+      <button class="btn btn-sub btn-sm" data-move="${list}:${i}:1" ${i === len - 1 ? 'disabled' : ''}>▼</button>
+      <button class="btn btn-del btn-sm" data-del="${list}:${i}">삭제</button></div>`;
+  }
+
+  function renderLists() {
+    $('programsList').innerHTML = data.programs.map((p, i, a) => `
+      <div class="item">
+        <div class="item-head"><strong>${esc(p.icon)} ${esc(p.title) || '(이름 없음)'}</strong>${tools('programs', i, a.length)}</div>
+        <div class="grid3">
+          <div class="field"><label>아이콘</label><input data-path="programs.${i}.icon" value="${esc(p.icon)}"></div>
+          <div class="field"><label>프로그램 이름</label><input data-path="programs.${i}.title" value="${esc(p.title)}"></div>
+          <div class="field"><label>색상</label>${colorSelect(`programs.${i}.color`, p.color)}</div>
+        </div>
+        <div class="field"><label>설명</label><textarea rows="2" data-path="programs.${i}.desc">${esc(p.desc)}</textarea></div>
+        <div class="field"><label>세부 항목 (쉼표로 구분)</label><input data-tags="programs.${i}.tags" value="${esc((p.tags || []).join(', '))}"></div>
+      </div>`).join('');
+
+    $('teamList').innerHTML = data.team.map((m, i, a) => `
+      <div class="item">
+        <div class="item-head"><strong>${esc(m.name) || '(이름 없음)'} · ${esc(m.role)}</strong>${tools('team', i, a.length)}</div>
+        <div class="grid3">
+          <div class="field"><label>뱃지</label><input data-path="team.${i}.badge" value="${esc(m.badge)}"></div>
+          <div class="field"><label>이름</label><input data-path="team.${i}.name" value="${esc(m.name)}"></div>
+          <div class="field"><label>색상</label>${colorSelect(`team.${i}.color`, m.color)}</div>
+        </div>
+        <div class="field"><label>직책 / 담당</label><input data-path="team.${i}.role" value="${esc(m.role)}"></div>
+        <div class="field"><label>학위 · 자격</label><textarea rows="2" data-path="team.${i}.desc">${esc(m.desc)}</textarea></div>
+      </div>`).join('');
+
+    $('hoursList').innerHTML = data.hours.map((h, i, a) => `
+      <div class="item">
+        <div class="item-head"><strong>${esc(h.label) || '(항목)'}</strong>${tools('hours', i, a.length)}</div>
+        <div class="grid2">
+          <div class="field"><label>구분</label><input data-path="hours.${i}.label" value="${esc(h.label)}"></div>
+          <div class="field"><label>시간</label><input data-path="hours.${i}.time" value="${esc(h.time)}"></div>
+        </div>
+      </div>`).join('');
+  }
+
+  function fillForm() {
+    document.querySelectorAll('#editor > section [data-path]').forEach(el => {
+      if (!el.closest('.item')) el.value = getPath(data, el.dataset.path) ?? '';
+    });
+    $('greetingText').value = data.greeting.paragraphs.join('\n\n');
+    renderLists();
+  }
+
+  function syncGreeting() {
+    data.greeting.paragraphs = $('greetingText').value.split(/\n\s*\n/).map(s => s.trim()).filter(Boolean);
+  }
+
+  // ---------- 이벤트 ----------
+  $('editor').addEventListener('input', e => {
+    const el = e.target;
+    if (el.dataset.path) setPath(data, el.dataset.path, el.value);
+    else if (el.dataset.tags) setPath(data, el.dataset.tags, el.value.split(',').map(s => s.trim()).filter(Boolean));
+    else if (el.id === 'greetingText') syncGreeting();
+    setDirty(true);
+  });
+  $('editor').addEventListener('change', e => {
+    if (e.target.tagName === 'SELECT') { setPath(data, e.target.dataset.path, e.target.value); setDirty(true); }
+  });
+  $('editor').addEventListener('click', e => {
+    const b = e.target.closest('button');
+    if (!b) return;
+    if (b.dataset.add) {
+      data[b.dataset.add].push(structuredClone(TEMPLATES[b.dataset.add]));
+    } else if (b.dataset.move) {
+      const [list, i, d] = b.dataset.move.split(':'); const a = data[list]; const j = +i + +d;
+      [a[i], a[j]] = [a[j], a[i]];
+    } else if (b.dataset.del) {
+      const [list, i] = b.dataset.del.split(':');
+      if (b.dataset.confirm !== '1') { b.dataset.confirm = '1'; b.textContent = '정말 삭제?'; return; }
+      data[list].splice(+i, 1);
+    } else return;
+    renderLists(); setDirty(true);
+  });
+
+  $('saveBtn').addEventListener('click', save);
+  $('logoutBtn').addEventListener('click', () => { store.clear(); location.reload(); });
+  window.addEventListener('beforeunload', e => { if (dirty) { e.preventDefault(); e.returnValue = ''; } });
+  window.addEventListener('keydown', e => { if ((e.ctrlKey || e.metaKey) && e.key === 's' && !$('editor').hidden) { e.preventDefault(); save(); } });
+
+  async function login(t) {
+    token = t.trim();
+    const err = $('loginErr');
+    err.hidden = true;
+    $('loginBtn').disabled = true; $('loginBtn').textContent = '확인 중…';
+    try {
+      data = await loadRemote();
+    } catch (e) {
+      err.textContent = e.message; err.hidden = false;
+      store.clear();
+      $('loginBtn').disabled = false; $('loginBtn').textContent = '로그인';
+      return;
+    }
+    if ($('rememberChk').checked) store.set(token);
+    $('loginPanel').hidden = true;
+    $('editor').hidden = false;
+    $('topActions').hidden = false;
+    fillForm();
+  }
+
+  $('loginBtn').addEventListener('click', () => { if ($('tokenInput').value.trim()) login($('tokenInput').value); });
+  $('tokenInput').addEventListener('keydown', e => { if (e.key === 'Enter') $('loginBtn').click(); });
+
+  const saved = store.get();
+  if (saved) login(saved);
+</script>
+</body>
+</html>

@@ -177,6 +177,9 @@
     box-shadow: 0 8px 24px rgba(242, 168, 139, .5);
   }
 
+  .notice { background: var(--yellow); color: var(--ink); text-align: center; padding: 10px 20px; font-weight: 500; font-size: .95rem; white-space: pre-line; }
+  .map a { color: var(--green-dark); font-weight: 700; }
+
   .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s, transform .7s; }
   .reveal.on { opacity: 1; transform: none; }
 
@@ -238,15 +241,16 @@
   </div>
 </header>
 
+<div class="notice" id="notice" hidden></div>
+
 <main id="top">
   <!-- Hero -->
   <section class="hero">
     <div class="wrap hero-grid">
       <div>
         <p class="eyebrow">PIUM CHILD DEVELOPMENT CENTER</p>
-        <h1>아이마다 피어나는<br><em>속도는 다릅니다</em></h1>
-        <p>피움아동발달상담센터는 아이의 고유한 기질과 속도를 존중하며,<br>
-          전문 치료진이 가정과 함께 건강한 성장을 돕습니다.</p>
+        <h1><span id="heroT1"></span><br><em id="heroT2"></em></h1>
+        <p id="heroDesc"></p>
         <div class="hero-actions">
           <a href="#contact" class="btn btn-primary">초기 상담 신청하기</a>
           <a href="#programs" class="btn btn-ghost">치료 프로그램 보기</a>
@@ -299,12 +303,7 @@
       <h2 class="section-title">작은 씨앗이 꽃을 피우기까지</h2>
       <p class="section-lead">'피움'은 아이 안에 이미 있는 가능성이 스스로 피어날 수 있도록 곁에서 기다리고 돕겠다는 약속입니다.</p>
       <div class="about-grid">
-        <div class="greeting reveal">
-          <p>안녕하세요, 피움아동발달상담센터를 찾아주셔서 감사합니다.</p>
-          <p>아이의 발달에 대한 고민은 부모님께 무엇보다 크고 무거운 마음일 것입니다. 저희는 그 마음을 깊이 공감하며, 정확한 평가를 바탕으로 아이에게 꼭 맞는 치료 계획을 세웁니다.</p>
-          <p>아이를 '고쳐야 할 대상'이 아닌 '함께 성장할 존재'로 바라보며, 치료실 안에서의 변화가 가정과 일상으로 이어지도록 부모님과 한 팀이 되겠습니다.</p>
-          <p class="sign">피움아동발달상담센터 센터장 <strong>[원장 이름]</strong></p>
-        </div>
+        <div class="greeting reveal" id="greeting"></div>
         <div class="values">
           <div class="value reveal">
             <div class="icon c-green">🌱</div>
@@ -333,44 +332,7 @@
       <p class="eyebrow">PROGRAMS</p>
       <h2 class="section-title">치료 프로그램</h2>
       <p class="section-lead">발달 평가 결과에 따라 한 가지 또는 여러 영역의 치료를 통합적으로 설계합니다.</p>
-      <div class="programs-grid">
-        <article class="card reveal">
-          <div class="icon c-peach">💬</div>
-          <h3>언어치료</h3>
-          <p>말이 늦거나 발음이 부정확한 아이, 의사소통에 어려움이 있는 아이를 돕습니다.</p>
-          <ul><li>언어발달지연</li><li>조음·음운장애</li><li>유창성(말더듬)</li></ul>
-        </article>
-        <article class="card reveal">
-          <div class="icon c-green">🧸</div>
-          <h3>놀이치료</h3>
-          <p>놀이를 통해 아이가 감정을 표현하고 스스로 조절하는 힘을 기릅니다.</p>
-          <ul><li>정서·불안 문제</li><li>분리불안, 위축</li><li>공격성, 감정 조절</li></ul>
-        </article>
-        <article class="card reveal">
-          <div class="icon c-yellow">🤸</div>
-          <h3>감각통합치료</h3>
-          <p>감각 정보를 처리하고 몸을 조절하는 능력을 키워 일상 적응을 돕습니다.</p>
-          <ul><li>감각 과민·둔감</li><li>대·소근육 발달</li><li>주의집중, 협응</li></ul>
-        </article>
-        <article class="card reveal">
-          <div class="icon c-blue">🧩</div>
-          <h3>인지학습치료</h3>
-          <p>주의력, 기억력, 문제해결력 등 학습의 기초가 되는 인지 능력을 다집니다.</p>
-          <ul><li>학습 준비도</li><li>ADHD·주의력 문제</li><li>읽기·쓰기·셈하기</li></ul>
-        </article>
-        <article class="card reveal">
-          <div class="icon c-purple">👫</div>
-          <h3>사회성 그룹</h3>
-          <p>또래와 함께하는 소그룹 활동으로 관계 맺기와 사회적 기술을 익힙니다.</p>
-          <ul><li>또래 관계 어려움</li><li>규칙·차례 지키기</li><li>2~4인 소그룹</li></ul>
-        </article>
-        <article class="card reveal">
-          <div class="icon c-sand">👨‍👩‍👧</div>
-          <h3>부모상담 · 발달평가</h3>
-          <p>표준화 검사로 아이의 현재 발달 수준을 확인하고 양육 방향을 함께 찾습니다.</p>
-          <ul><li>종합 발달 검사</li><li>부모 양육 코칭</li><li>영유아 검진 후 상담</li></ul>
-        </article>
-      </div>
+      <div class="programs-grid" id="programsGrid"></div>
     </div>
   </section>
 
@@ -406,32 +368,7 @@
       <p class="eyebrow">OUR TEAM</p>
       <h2 class="section-title">치료진 소개</h2>
       <p class="section-lead">관련 학위와 국가·민간 자격을 갖춘 치료사들이 정기 사례회의를 통해 아이를 함께 살핍니다.</p>
-      <div class="team-grid">
-        <div class="member reveal">
-          <div class="avatar c-peach">원장</div>
-          <h3>[이름]</h3>
-          <p class="role">센터장 · 놀이치료</p>
-          <p>[학위 및 자격 사항]</p>
-        </div>
-        <div class="member reveal">
-          <div class="avatar c-green">언어</div>
-          <h3>[이름]</h3>
-          <p class="role">언어재활사</p>
-          <p>[학위 및 자격 사항]</p>
-        </div>
-        <div class="member reveal">
-          <div class="avatar c-yellow">감통</div>
-          <h3>[이름]</h3>
-          <p class="role">감각통합치료사</p>
-          <p>[학위 및 자격 사항]</p>
-        </div>
-        <div class="member reveal">
-          <div class="avatar c-blue">인지</div>
-          <h3>[이름]</h3>
-          <p class="role">인지학습치료사</p>
-          <p>[학위 및 자격 사항]</p>
-        </div>
-      </div>
+      <div class="team-grid" id="teamGrid"></div>
     </div>
   </section>
 
@@ -447,11 +384,7 @@
         <div class="step reveal"><h3>발달 평가</h3><p>필요한 영역의 표준화 검사 후 결과를 상세히 설명드립니다.</p></div>
         <div class="step reveal"><h3>치료 진행</h3><p>맞춤 목표로 치료를 시작하고 정기적으로 경과를 점검합니다.</p></div>
       </div>
-      <div class="hours">
-        <div><strong>평일</strong><span>[오전 10:00 ~ 오후 7:00]</span></div>
-        <div><strong>토요일</strong><span>[오전 9:00 ~ 오후 3:00]</span></div>
-        <div><strong>휴무</strong><span>[일요일 · 공휴일]</span></div>
-      </div>
+      <div class="hours" id="hours"></div>
       <p style="color:var(--ink-soft);font-size:.9rem;margin-top:20px">※ 발달재활서비스 바우처 이용 가능 여부는 센터로 문의해 주세요.</p>
     </div>
   </section>
@@ -464,13 +397,8 @@
       <p class="section-lead">궁금한 점이 있으시면 편하게 연락 주세요. 확인 후 빠르게 연락드리겠습니다.</p>
       <div class="contact-grid">
         <div>
-          <ul class="info-list">
-            <li><span class="ic">📞</span><div><strong>전화</strong>[000-0000-0000]</div></li>
-            <li><span class="ic">📍</span><div><strong>주소</strong>[도로명 주소를 입력하세요]</div></li>
-            <li><span class="ic">🚗</span><div><strong>주차</strong>[건물 내 주차 가능 여부]</div></li>
-            <li><span class="ic">✉️</span><div><strong>이메일</strong>[이메일 주소]</div></li>
-          </ul>
-          <div class="map">지도 영역<br>(네이버·카카오 지도 퍼가기 코드를 넣으세요)</div>
+          <ul class="info-list" id="infoList"></ul>
+          <div class="map" id="map"></div>
         </div>
         <form id="bookForm" novalidate>
           <div id="formBody">
@@ -508,8 +436,8 @@
   <div class="wrap foot">
     <div>
       <div class="brand">피움아동발달상담센터</div>
-      <p>대표 [이름] · 사업자등록번호 [000-00-00000]</p>
-      <p>[주소] · Tel [000-0000-0000]</p>
+      <p id="footLine1"></p>
+      <p id="footLine2"></p>
     </div>
     <div style="align-self:flex-end">© 2026 피움아동발달상담센터. All rights reserved.</div>
   </div>
@@ -517,7 +445,53 @@
 
 <a href="#contact" class="float-call">📞 상담 예약</a>
 
+<script src="content.js"></script>
 <script>
+  // content.js(관리자 페이지에서 수정) 내용을 화면에 반영
+  (function render(S) {
+    const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    const br = s => esc(s).replace(/\n/g, '<br>');
+    const $ = id => document.getElementById(id);
+
+    if (S.notice && S.notice.trim()) { $('notice').textContent = S.notice; $('notice').hidden = false; }
+
+    $('heroT1').textContent = S.hero.title1;
+    $('heroT2').textContent = S.hero.title2;
+    $('heroDesc').innerHTML = br(S.hero.desc);
+
+    $('greeting').innerHTML = S.greeting.paragraphs.map(p => `<p>${br(p)}</p>`).join('') +
+      `<p class="sign">피움아동발달상담센터 센터장 <strong>${esc(S.greeting.director)}</strong></p>`;
+
+    $('programsGrid').innerHTML = S.programs.map(p => `
+      <article class="card reveal">
+        <div class="icon ${esc(p.color)}">${esc(p.icon)}</div>
+        <h3>${esc(p.title)}</h3>
+        <p>${br(p.desc)}</p>
+        <ul>${(p.tags || []).map(t => `<li>${esc(t)}</li>`).join('')}</ul>
+      </article>`).join('');
+
+    $('teamGrid').innerHTML = S.team.map(m => `
+      <div class="member reveal">
+        <div class="avatar ${esc(m.color)}">${esc(m.badge)}</div>
+        <h3>${esc(m.name)}</h3>
+        <p class="role">${esc(m.role)}</p>
+        <p>${br(m.desc)}</p>
+      </div>`).join('');
+
+    $('hours').innerHTML = S.hours.map(h => `<div><strong>${esc(h.label)}</strong><span>${esc(h.time)}</span></div>`).join('');
+
+    const c = S.contact;
+    $('infoList').innerHTML = [
+      ['📞', '전화', c.phone], ['📍', '주소', c.address], ['🚗', '주차', c.parking], ['✉️', '이메일', c.email]
+    ].filter(r => r[2]).map(r => `<li><span class="ic">${r[0]}</span><div><strong>${r[1]}</strong>${esc(r[2])}</div></li>`).join('');
+    $('map').innerHTML = /^https?:\/\//.test(c.mapUrl || '')
+      ? `📍 ${esc(c.address)}<br><a href="${esc(c.mapUrl)}" target="_blank" rel="noopener">지도에서 위치 보기 →</a>`
+      : '지도 영역<br>(관리자 페이지에서 지도 링크를 입력하세요)';
+
+    $('footLine1').textContent = `대표 ${S.footer.ceo} · 사업자등록번호 ${S.footer.bizNo}`;
+    $('footLine2').textContent = `${c.address} · Tel ${c.phone}`;
+  })(window.SITE);
+
   // 모바일 메뉴
   const menuBtn = document.querySelector('.menu-btn');
   const navLinks = document.querySelector('.nav-links');
